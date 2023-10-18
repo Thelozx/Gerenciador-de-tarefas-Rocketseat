@@ -16,9 +16,8 @@ import lombok.Data;
 public class UserModel {
 
   @Id
-  @GeneratedValue(generator ="UUID")
+  @GeneratedValue(generator = "UUID")
   private UUID id;
-
 
   @Column(unique = true)
   private String username;
@@ -27,6 +26,5 @@ public class UserModel {
 
   @CreationTimestamp
   private LocalDateTime createdAt;
-
 
 }
