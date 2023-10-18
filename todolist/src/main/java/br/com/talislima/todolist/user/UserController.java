@@ -16,29 +16,26 @@ import lombok.var;
 public class UserController {
 
     @Autowired
-    private IUserRepository  userRepository;
+    private IUserRepository userRepository;
 
-    //http://127.0.0.1:8080/users
+    // http://127.0.0.1:8080/users
     @PostMapping("/")
-    public ResponseEntity create (@RequestBody UserModel userModel) {
-       var user = this.userRepository.findByUsername(userModel.getUsername());
+    public ResponseEntity create(@RequestBody UserModel userModel) {
+        var user = this.userRepository.findByUsername(userModel.getUsername());
 
-       if (user != null){
+        if (user != null) {
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario Já Cadastrado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario Já Cadastrado.");
 
-       }
+        }
 
-       var passwordHashred = BCrypt .withDefaults()
-       .hashToString(12, userModel.getPassword().toCharArray());
+        var passwordHashred = BCrypt.withDefaults()
+                .hashToString(12, userModel.getPassword().toCharArray());
 
-       userModel.setPassword(passwordHashred);
+        userModel.setPassword(passwordHashred);
 
-
-       var userCreated = this.userRepository.save(userModel);
-       return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
+        var userCreated = this.userRepository.save(userModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
 
     }
 }
-
-
